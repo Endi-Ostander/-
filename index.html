@@ -1,73 +1,113 @@
 <!DOCTYPE html>
- <html lang="ru">
- <head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Пример сайта с верхней панелью</title>
- <style> /* Сброс базовых стилей */ 
- * {
-   box-sizing: border-box;
-   }
- body {
-   margin: 0;
-   font-family: Arial, sans-serif;
-   background-color: #f4f4f4;
-  background-image: url("https://avatars.mds.yandex.net/i?id=f68f72cb7274c9fdf11dbe206d3bed12_l-5398918-images-thumbs&n=13");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center 300px;
-   }
- header {
-   background-color: #333;
-   color: white;
-   padding: 10px 20px;
-   position: fixed;
-   top: 0; left: 0;
-   right: 0;
-   height: 50px;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   z-index: 1000;
-   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
- } /* Логотип/название */
- .logo {
-   font-weight: bold;
-   font-size: 20px;
- }
- nav {
-   display: flex;
-   gap: 15px;
- }
- nav a {
-   color: white;
-   text-decoration: none;
-   font-weight: 500;
-   padding: 6px 10px;
-   border-radius: 4px;
-   transition: background-color 0.3s; }
- nav a:hover {
-   background-color: #555;
- } 
- main {
-   padding: 70px 20px 20px 20px;
- }
- </style>
- </head>
- <body>
- <header>
- <div class="logo">
-   Endi-IA
- </div>
- <nav>
-   <a href="#">Главная</a>
-   <a href="#">О проекте</a>
-   <a href="#">Контакты</a>
- </nav>
- </header>
- <main>
-   <h1>Добро пожаловать на мой сайт!</h1>
-   <p>Это простой пример верхней панели с меню (хедбар).</p>
- </main>
- </body>
- </html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Endi IA – визитка</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e; /* тёмная тема */
+      color: #f4f4f4;
+    }
+
+    header {
+      background-color: #222;
+      color: white;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #444;
+    }
+
+    .decor-top {
+      margin-top: 50px; /* отступ от хедера */
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .decor-top img {
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: 0.4; /* слегка затемнено */
+      filter: contrast(110%) brightness(90%);
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 15px;
+      }
+
+      .logo {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Endi-IA</div>
+    <nav>
+      <a href="#">Главная</a>
+      <a href="#">О проекте</a>
+      <a href="#">Контакты</a>
+    </nav>
+  </header>
+
+  <div class="decor-top">
+    <img src="https://avatars.mds.yandex.net/i?id=f68f72cb7274c9fdf11dbe206d3bed12_l-5398918-images-thumbs&n=13" alt="Декоративный фон Endi" />
+  </div>
+
+  <main>
+    <h1>Добро пожаловать на мой сайт!</h1>
+    <p>Это визитка проекта Endi IA. Здесь будет представлена информация о моём ИИ и его развитии.</p>
+    <p>Фон и оформление адаптированы под тёмную тему и разные устройства.</p>
+  </main>
+
+</body>
+</html>
