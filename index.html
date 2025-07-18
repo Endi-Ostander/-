@@ -13,7 +13,7 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-color: #1e1e1e; /* тёмная тема */
+      background-color: #1e1e1e;
       color: #f4f4f4;
     }
 
@@ -26,7 +26,6 @@
       left: 0;
       right: 0;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       z-index: 1000;
@@ -36,13 +35,11 @@
     .logo {
       font-weight: bold;
       font-size: 20px;
-      flex: 1;
     }
 
     nav {
       display: flex;
       gap: 15px;
-      flex-wrap: wrap;
     }
 
     nav a {
@@ -58,18 +55,63 @@
       background-color: #444;
     }
 
+    /* Бургер */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .burger span {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+    }
+
+    /* Мобильное меню */
+    #menu-toggle {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: #222;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        width: 100%;
+        text-align: left;
+      }
+
+      nav a {
+        padding: 12px 20px;
+        border-top: 1px solid #333;
+      }
+
+      #menu-toggle:checked + nav {
+        display: flex;
+      }
+
+      .burger {
+        display: flex;
+      }
+    }
+
     .decor-top {
-      margin-top: 70px; /* отступ от шапки */
+      margin-top: 70px;
       width: 100%;
       overflow: hidden;
-      position: relative;
     }
 
     .decor-top img {
       width: 100%;
       height: auto;
       display: block;
-      opacity: 0.4; /* слегка затемнено */
+      opacity: 0.4;
       filter: contrast(110%) brightness(90%);
     }
 
@@ -80,29 +122,6 @@
     }
 
     @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 15px;
-      }
-
-      .logo {
-        font-size: 18px;
-        margin-bottom: 10px;
-      }
-
-      nav {
-        flex-direction: column;
-        width: 100%;
-        gap: 5px;
-      }
-
-      nav a {
-        width: 100%;
-        padding: 10px;
-        text-align: left;
-      }
-
       main {
         padding: 15px;
       }
@@ -112,6 +131,16 @@
 <body>
   <header>
     <div class="logo">Endi-IA</div>
+
+    <!-- Бургер-кнопка -->
+    <label for="menu-toggle" class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <input type="checkbox" id="menu-toggle" hidden />
+
+    <!-- Меню -->
     <nav>
       <a href="#">Главная</a>
       <a href="#">О проекте</a>
