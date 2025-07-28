@@ -1,0 +1,40 @@
+#:kivy 2.0
+
+<SnakeWidget>:
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+        size: root.size
+
+        Button:
+            text: "▲"
+            font_size: 32
+            size_hint: 0.2, 0.1
+            pos_hint: {"center_x": 0.5, "y": 0.3}
+            on_press: app.send_dir(0, -1)
+
+        Button:
+            text: "◀"
+            font_size: 32
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.1, "y": 0.2}
+            on_press: app.send_dir(-1, 0)
+
+        Button:
+            text: "▶"
+            font_size: 32
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.7, "y": 0.2}
+            on_press: app.send_dir(1, 0)
+
+        Button:
+            text: "▼"
+            font_size: 32
+            size_hint: 0.2, 0.1
+            pos_hint: {"center_x": 0.5, "y": 0.1}
+            on_press: app.send_dir(0, 1)
