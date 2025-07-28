@@ -52,11 +52,11 @@ jobs:
           requirements = python3,kivy==2.3.0,websockets
           orientation = portrait
           fullscreen = 1
-          android.archs = arm64-v8a
+          android.archs = armeabi-v7a, arm64-v8a
           android.permissions = INTERNET
-          android.minapi = 21
-          android.api = 34
-          android.ndk = 25b
+          android.minapi = 19
+          android.api = 30
+          android.ndk = 23c
           p4a.branch = develop
           android.accept_sdk_license = True
           log_level = 2
@@ -67,10 +67,10 @@ jobs:
         run: |
           mkdir -p ~/.buildozer/android/platform
           cd ~/.buildozer/android/platform
-          wget -q https://dl.google.com/android/repository/android-ndk-r25b-linux.zip
-          unzip -q android-ndk-r25b-linux.zip
-          rm android-ndk-r25b-linux.zip
-          echo "ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-ndk-r25b" >> $GITHUB_ENV
+          wget -q https://dl.google.com/android/repository/android-ndk-r23c-linux.zip
+          unzip -q android-ndk-r23c-linux.zip
+          rm android-ndk-r23c-linux.zip
+          echo "ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-ndk-r23c" >> $GITHUB_ENV
 
       - name: Setup Android SDK
         run: |
@@ -80,13 +80,13 @@ jobs:
           unzip -q commandlinetools-linux-9477386_latest.zip -d tmp
           mv tmp/cmdline-tools latest
           rm -rf tmp commandlinetools-linux-9477386_latest.zip
-          
+
           mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
           ln -s ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
-          
+
           yes | ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
-          ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
-          
+          ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+
           echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
           echo "ANDROID_SDK_ROOT=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
           echo "PATH=$PATH:$HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin:$HOME/.buildozer/android/platform/android-sdk/platform-tools" >> $GITHUB_ENV
@@ -107,12 +107,12 @@ jobs:
         run: |
           export BUILD_DIR=$GITHUB_WORKSPACE
           export ANDROID_SDK_ROOT=$HOME/.buildozer/android/platform/android-sdk
-          export ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-ndk-r25b
-          
+          export ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-ndk-r23c
+
           cd $BUILD_DIR
           buildozer -v android clean
           buildozer -v android debug
-          
+
           if ls bin/*.apk 1> /dev/null 2>&1; then
             cp bin/*.apk zmeika-app.apk
           else
