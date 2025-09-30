@@ -1,0 +1,21 @@
+[BITS 32]
+
+extern irq_handler   ; добавляем, чтобы NASM знал о функции из C
+
+global irq0, irq1
+
+%macro IRQ 1
+    global irq%1
+irq%1:
+    pusha
+    push dword 0
+    push dword (32+%1)
+    call irq_handler
+    add esp, 8
+    popa
+    iretd
+%endmacro
+
+IRQ 0
+IRQ 1
+

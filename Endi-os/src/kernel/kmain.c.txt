@@ -1,0 +1,25 @@
+#include "console.h"
+#include "serial.h"
+#include "idt.h"
+#include "isr.h"
+#include "irq.h"
+#include "timer.h"
+#include "keyboard.h"
+
+void kmain(void) {
+    console_init();
+    serial_init();
+    console_write("Endi-OS v0.0.2 starting...\n");
+
+    idt_install();
+    isr_install();
+    irq_install();
+    timer_install();
+    keyboard_init();
+
+    console_write("System initialized.\n");
+
+    while (1) {
+        __asm__ volatile("hlt"); // процессор ждёт прерываний
+    }
+}

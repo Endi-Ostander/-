@@ -1,0 +1,33 @@
+#include "irq.h"
+#include "idt.h"
+#include "console.h"
+#include "serial.h"
+#include "port.h"
+
+extern void irq0();
+extern void irq1();
+
+static void* irq_routines[16] = {0};
+
+void irq_install_handler(int irq, void (*handler)(registers_t regs)) {
+    irq_routines[irq] = handler;
+}
+
+void irq_handler(registers_t regs) {
+    if (irq_routines[regs.int_no - 32]) {
+        void (*handler)(registers_t regs);
+        handler = irq_routines[regs.int_no - 32];
+        handler(regs);
+    }
+
+    // EOI для PIC
+    if (regs.int_no >= 40) {
+        outb(0xA0, 0x20);
+    }
+    outb(0x20, 0x20);
+}
+
+void irq_install(void) {
+    idt_set_gate(32, (uint32_t)irq0, 0x08, 0x8E);
+    idt_set_gate(33, (uint32_t)irq1, 0x08, 0x8E);
+}

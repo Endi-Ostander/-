@@ -1,0 +1,25 @@
+#include "serial.h"
+
+static inline void outb(uint16_t port, uint8_t val) {
+    __asm__ volatile ( "outb %0, %1" : : "a"(val), "Nd"(port) );
+}
+
+void serial_init(void) {
+    outb(0x3F8 + 1, 0x00);    // Отключить прерывания
+    outb(0x3F8 + 3, 0x80);    // Включить DLAB
+    outb(0x3F8 + 0, 0x03);    // Делитель (младший байт) — 38400 бод
+    outb(0x3F8 + 1, 0x00);    // Делитель (старший байт)
+    outb(0x3F8 + 3, 0x03);    // 8 бит, без чётности, 1 стоп-бит
+    outb(0x3F8 + 2, 0xC7);    // FIFO, очистка, порог 14 байт
+    outb(0x3F8 + 4, 0x0B);    // Включить IRQ, RTS/DSR
+}
+
+void serial_write_char(char c) {
+    outb(0x3F8, c);
+}
+
+void serial_write(const char* str) {
+    while (*str) {
+        serial_write_char(*str++);
+    }
+}

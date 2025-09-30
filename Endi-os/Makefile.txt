@@ -1,0 +1,49 @@
+TARGET = kernel.elf
+CC = gcc
+LD = ld
+AS = nasm
+
+CFLAGS = -m32 -ffreestanding -fno-stack-protector -fno-pic -fno-pie \
+         -nostdlib -nostartfiles -nodefaultlibs -Wall -Wextra -O2
+LDFLAGS = -m elf_i386 -nostdlib -T src/linker.ld
+
+OBJS = src/boot/multiboot_header.o \
+       src/kernel/kmain.o \
+       src/kernel/console.o \
+       src/kernel/keyboard.o \
+       src/kernel/serial.o \
+       src/kernel/idt.o \
+       src/kernel/isr.o \
+       src/kernel/irq.o \
+       src/kernel/timer.o \
+       src/boot/isr_handlers.o \
+       src/boot/irq_handlers.o
+
+all: $(TARGET) iso
+
+# ASM файлы
+src/boot/%.o: src/boot/%.asm
+	nasm -f elf32 $< -o $@
+
+src/kernel/%.o: src/kernel/%.asm
+	nasm -f elf32 $< -o $@
+
+# C файлы
+src/kernel/%.o: src/kernel/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
+$(TARGET): $(OBJS)
+	$(LD) $(LDFLAGS) -o $@ $(OBJS)
+
+iso: $(TARGET)
+	mkdir -p iso/boot/grub
+	cp $(TARGET) iso/boot/
+	cp grub.cfg iso/boot/grub/
+	grub-mkrescue -o endi-os.iso iso -d /usr/lib/grub/i386-pc
+
+run: iso
+	qemu-system-i386 -boot d -cdrom endi-os.iso
+
+clean:
+	rm -rf *.o src/boot/*.o src/kernel/*.o $(TARGET) iso endi-os.iso

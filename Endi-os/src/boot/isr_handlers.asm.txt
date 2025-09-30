@@ -1,0 +1,54 @@
+[BITS 32]
+
+extern isr_handler   ; добавляем, чтобы NASM знал о функции из C
+
+global isr0, isr1, isr2, isr3, isr4, isr5, isr6, isr7
+global isr8, isr9, isr10, isr11, isr12, isr13
+global isr14, isr15, isr16, isr17, isr18, isr19
+global isr20, isr21, isr22, isr23, isr24, isr25
+global isr26, isr27, isr28, isr29, isr30, isr31
+
+%macro ISR 1
+    global isr%1
+isr%1:
+    pusha
+    push dword 0
+    push dword %1
+    call isr_handler
+    add esp, 8
+    popa
+    iretd
+%endmacro
+
+ISR 0
+ISR 1
+ISR 2
+ISR 3
+ISR 4
+ISR 5
+ISR 6
+ISR 7
+ISR 8
+ISR 9
+ISR 10
+ISR 11
+ISR 12
+ISR 13
+ISR 14
+ISR 15
+ISR 16
+ISR 17
+ISR 18
+ISR 19
+ISR 20
+ISR 21
+ISR 22
+ISR 23
+ISR 24
+ISR 25
+ISR 26
+ISR 27
+ISR 28
+ISR 29
+ISR 30
+ISR 31
